@@ -48,9 +48,9 @@
             <div class="sidebar-content">
                 <div class="nav-container">
                     <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
-                        <li class="has-sub nav-item">
+                        @* <li class="has-sub nav-item">
                             <a href="#"><i class="icon-home"></i><span data-i18n="" class="menu-title">داشبورد</span><span class="tag badge badge-pill badge-danger mt-1">2</span></a>
-                        </li>
+                        </li> *@
 
 
 
@@ -81,8 +81,8 @@
                             </ul>
                         </li>
 
-                        @if (ClaimUtility.GetRolse(User).Where(p => p == "Operator").Count() >= 1)
-                        {
+                        @* @if (ClaimUtility.GetRolse(User).Where(p => p == "Operator").Count() >= 1)
+                        { *@
                             <li class="has-sub nav-item">
                                 <a href="#"><i class="icon-crop"></i><span data-i18n="" class="menu-title">  دسته بندی ها </span></a>
                                 <ul class="menu-content">
@@ -95,7 +95,7 @@
                                 </ul>
                             </li>
 
-                        }
+                        @* } *@
 
                         <li class="has-sub nav-item">
                             <a href="#"><i class="icon-crop"></i><span data-i18n="" class="menu-title"> محصولات </span></a>
@@ -119,7 +119,7 @@
                                     <a href="~/admin/blog/addnewblog" class="menu-item">افزودن پست جدید *</a>
                                 </li>
                                  <li>
-                                    <a href="~/admin/blog/addnewblog" class="menu-item">افزودن دسته بندی</a>
+                                    <a href="~/admin/blog/addnewblogcategory" class="menu-item">افزودن دسته بندی</a>
                                 </li>
                             </ul>
                         </li>
@@ -179,10 +179,10 @@
                         <p class="d-none">سبد خرید</p>
                     </a>
                     <div class="dropdown mr-2 display-inline-block">
-                        <a id="apps" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle"><i class="ft-edit blue-grey darken-4"></i><span class="mx-1 blue-grey darken-4 text-bold-400">برنامه ها</span></a>
+                        @* <a id="apps" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle"><i class="ft-edit blue-grey darken-4"></i><span class="mx-1 blue-grey darken-4 text-bold-400">برنامه ها</span></a>
                         <div class="apps dropdown-menu">
                             <div class="arrow_box"><a href="chat.html" class="dropdown-item py-1"><span>چت</span></a><a href="taskboard.html" class="dropdown-item py-1"><span>وظیفه</span></a><a href="calendar.html" class="dropdown-item py-1"><span>تقویم</span></a></div>
-                        </div>
+                        </div> *@
                     </div>
                 </div>
                 <div class="navbar-container">
@@ -231,7 +231,7 @@
                                 </a>
                                 <div aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-left">
                                     <div class="arrow_box_right">
-                                        <a href="user-profile-page.html" class="dropdown-item py-1"><i class="ft-edit ml-2"></i><span>پروفایل من</span></a><a href="chat.html" class="dropdown-item py-1"><i class="ft-message-circle ml-2"></i><span>چت من</span></a><a href="javascript:;" class="dropdown-item py-1"><i class="ft-settings ml-2"></i><span>تنظیمات</span></a>
+                                        <a href="#" class="dropdown-item py-1"><i class="ft-edit ml-2"></i><span>پروفایل من</span></a><a href="#" class="dropdown-item py-1"><i class="ft-message-circle ml-2"></i><span>چت من</span></a><a href="javascript:;" class="dropdown-item py-1"><i class="ft-settings ml-2"></i><span>تنظیمات</span></a>
                                         <div class="dropdown-divider"></div><a href="javascript:;" class="dropdown-item"><i class="ft-power ml-2"></i><span>خروج</span></a>
                                     </div>
                                 </div>
@@ -414,7 +414,7 @@
             </div>
         </div>
     </aside>
-    <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-sm-none d-md-block">
+    @* <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-sm-none d-md-block">
         <a class="customizer-close"><i class="ft-x font-medium-3"></i></a><a id="customizer-toggle-icon" class="customizer-toggle bg-danger"><i class="ft-settings font-medium-4 fa fa-spin white align-middle"></i></a>
         <div data-ps-id="df6a5ce4-a175-9172-4402-dabd98fc9c0a" class="customizer-content p-3 ps-container ps-theme-dark">
             <h4 class="mb-0 text-bold-400">تم سفارشی</h4>
@@ -481,7 +481,7 @@
                 </select>
             </div>
         </div>
-    </div>
+    </div> *@
     <!-- BEGIN VENDOR JS-->
 
     
@@ -501,6 +501,8 @@
     <script src="~/AdminTemplate/app-assets/js/app-sidebar.js"></script>
     <script src="~/AdminTemplate/app-assets/js/notification-sidebar.js"></script>
     <script src="~/AdminTemplate/app-assets/js/customizer.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js" ></script>
     <!-- END CONVEX JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- END PAGE LEVEL JS-->

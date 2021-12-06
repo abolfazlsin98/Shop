@@ -28,16 +28,12 @@ namespace Bugeto_Store.Application.Services.Products.Commands.AddNewProduct
             _context = context;
             _environment = hostingEnvironment;
         }
-
-
         public ResultDto Execute(RequestAddNewProductDto request)
         {
 
             try
             {
-
                 var category = _context.Categories.Find(request.CategoryId);
-
                 Product product = new Product()
                 {
                     Brand = request.Brand,
@@ -46,7 +42,7 @@ namespace Bugeto_Store.Application.Services.Products.Commands.AddNewProduct
                     Price = request.Price,
                     Inventory = request.Inventory,
                     Category = category,
-                    Displayed= request.Displayed,
+                    Displayed = request.Displayed,
                 };
                 _context.Products.Add(product);
 
@@ -71,7 +67,7 @@ namespace Bugeto_Store.Application.Services.Products.Commands.AddNewProduct
                     {
                         DisplayName = item.DisplayName,
                         Value = item.Value,
-                        Product= product,
+                        Product = product,
                     });
                 }
                 _context.ProductFeatures.AddRange(productFeatures);
@@ -96,7 +92,7 @@ namespace Bugeto_Store.Application.Services.Products.Commands.AddNewProduct
 
         }
 
- 
+
         private UploadDto UploadFile(IFormFile file)
         {
             if (file != null)

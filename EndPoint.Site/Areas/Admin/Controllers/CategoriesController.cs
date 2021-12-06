@@ -11,7 +11,7 @@ namespace EndPoint.Site.Areas.Admin.Controllers
 {
 
     [Area("Admin")]
-    [Authorize("Operator")]
+    [Authorize(Roles = "Admin , Operator")]
     public class CategoriesController : Controller
     {
 

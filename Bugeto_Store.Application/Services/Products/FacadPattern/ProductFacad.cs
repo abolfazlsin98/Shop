@@ -2,6 +2,7 @@
 using Bugeto_Store.Application.Interfaces.FacadPatterns;
 using Bugeto_Store.Application.Services.Products.Commands.AddNewCategory;
 using Bugeto_Store.Application.Services.Products.Commands.AddNewProduct;
+using Bugeto_Store.Application.Services.Products.Commands.DeleteProduct;
 using Bugeto_Store.Application.Services.Products.Queries.GetAllCategories;
 using Bugeto_Store.Application.Services.Products.Queries.GetCategories;
 using Bugeto_Store.Application.Services.Products.Queries.GetProductDetailForAdmin;
@@ -83,21 +84,32 @@ namespace Bugeto_Store.Application.Services.Products.FacadPattern
             {
                 return _getProductDetailForAdminService = _getProductDetailForAdminService ?? new GetProductDetailForAdminService(_context);
             }
-        }    
-        
-        
-        private IGetProductForSiteService   _getProductForSiteService;
-        public IGetProductForSiteService  GetProductForSiteService
+        }
+
+
+        private IGetProductForSiteService _getProductForSiteService;
+        public IGetProductForSiteService GetProductForSiteService
         {
             get
             {
                 return _getProductForSiteService = _getProductForSiteService ?? new GetProductForSiteService(_context);
             }
-        }    
-        
-        
-        private IGetProductDetailForSiteService  _getProductDetailForSiteService;
-        public IGetProductDetailForSiteService  GetProductDetailForSiteService
+        }
+
+
+        private IDeleteProductService _deleteProductService;
+
+
+        public IDeleteProductService DeleteProductService
+        {
+            get
+            {
+                return _deleteProductService = _deleteProductService ?? new DeleteProductService(_context);
+            }
+        }
+
+        private IGetProductDetailForSiteService _getProductDetailForSiteService;
+        public IGetProductDetailForSiteService GetProductDetailForSiteService
         {
             get
             {

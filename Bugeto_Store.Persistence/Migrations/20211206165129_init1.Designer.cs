@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bugeto_Store.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20211206114611_addblog12")]
-    partial class addblog12
+    [Migration("20211206165129_init1")]
+    partial class init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -417,7 +417,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 1L,
                             ImageLocation = 0,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3004),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(3917),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637742949830874456637316263744270286sm-1.jpg"
                         },
@@ -425,7 +425,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 2L,
                             ImageLocation = 1,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3625),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4379),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637742949941898292637316430621882982a-4.jpg"
                         },
@@ -433,7 +433,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 3L,
                             ImageLocation = 3,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3635),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4387),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316430895780623a-4.jpg"
                         },
@@ -441,7 +441,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 4L,
                             ImageLocation = 6,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3637),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4389),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316430895780623a-4.jpg"
                         },
@@ -449,7 +449,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 5L,
                             ImageLocation = 4,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3640),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4391),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316277407677837sm-3.jpg"
                         },
@@ -457,7 +457,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 6L,
                             ImageLocation = 5,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3642),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4393),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316430895780623a-4.jpg"
                         });
@@ -754,21 +754,21 @@ namespace Bugeto_Store.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 441, DateTimeKind.Local).AddTicks(1251),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 294, DateTimeKind.Local).AddTicks(2031),
                             IsRemoved = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(2502),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(3414),
                             IsRemoved = false,
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(2604),
+                            InsertTime = new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(3531),
                             IsRemoved = false,
                             Name = "Customer"
                         });

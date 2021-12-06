@@ -21,7 +21,7 @@ namespace Bugeto_Store.Persistence.Contexts
 {
     public class DataBaseContext : DbContext, IDataBaseContext
     {
-        public DataBaseContext(DbContextOptions options  ) : base(options)
+        public DataBaseContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -29,11 +29,11 @@ namespace Bugeto_Store.Persistence.Contexts
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserInRole> UserInRoles { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Product>  Products { get; set; }
-        public DbSet<ProductImages>  ProductImages { get; set; }
-        public DbSet<ProductFeatures> ProductFeatures{ get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImages> ProductImages { get; set; }
+        public DbSet<ProductFeatures> ProductFeatures { get; set; }
         public DbSet<Slider> Sliders { get; set; }
-        public DbSet<HomePageImages>  HomePageImages { get; set; }
+        public DbSet<HomePageImages> HomePageImages { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<RequestPay> RequestPays { get; set; }
@@ -53,8 +53,8 @@ namespace Bugeto_Store.Persistence.Contexts
             modelBuilder.Entity<Order>()
                 .HasOne(p => p.User)
                 .WithMany(p => p.Orders)
-                .OnDelete(DeleteBehavior.NoAction); 
-            
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Order>()
                 .HasOne(p => p.RequestPay)
                 .WithMany(p => p.Orders)
@@ -62,7 +62,7 @@ namespace Bugeto_Store.Persistence.Contexts
 
 
             modelBuilder.Entity<Comment>().HasOne(c => c.BlogPost)
-            .WithMany(b=> b.Comments)
+            .WithMany(b => b.Comments)
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
@@ -88,11 +88,11 @@ namespace Bugeto_Store.Persistence.Contexts
             // اعمال ایندکس بر روی فیلد ایمیل
             // اعمال عدم تکراری بودن ایمیل
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
- 
+
             //-- عدم نمایش اطلاعات حذف شده
             ApplyQueryFilter(modelBuilder);
         }
- 
+
         private void ApplyQueryFilter(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
@@ -120,7 +120,7 @@ namespace Bugeto_Store.Persistence.Contexts
 
             modelBuilder.Entity<HomePageImages>().HasData(new HomePageImages { Id = 1, Src = @"images\HomePages\Slider\637742949830874456637316263744270286sm-1.jpg", ImageLocation = ImageLocation.L1 },
                 new HomePageImages { Id = 2, Src = @"images\HomePages\Slider\637742949941898292637316430621882982a-4.jpg", ImageLocation = ImageLocation.L2 },
-                new HomePageImages { Id = 3, Src = @"images\HomePages\Slider\637316430895780623a-4.jpg", ImageLocation = ImageLocation.R1 }, 
+                new HomePageImages { Id = 3, Src = @"images\HomePages\Slider\637316430895780623a-4.jpg", ImageLocation = ImageLocation.R1 },
                 new HomePageImages { Id = 4, Src = @"images\HomePages\Slider\637316430895780623a-4.jpg", ImageLocation = ImageLocation.G2 },
                 new HomePageImages { Id = 5, Src = @"images\HomePages\Slider\637316277407677837sm-3.jpg", ImageLocation = ImageLocation.CenterFullScreen },
                 new HomePageImages { Id = 6, Src = @"images\HomePages\Slider\637316430895780623a-4.jpg", ImageLocation = ImageLocation.G1 });
@@ -210,7 +210,7 @@ namespace Bugeto_Store.Persistence.Contexts
         public DataBaseContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
-            string contectionString = "Server=.;Database=Shop;User Id=sa;Password=19901990;MultipleActiveResultSets=true;";
+            string contectionString = "Server=.; Initial Catalog=Bugeto_StoreDb; Integrated Security=True;MultipleActiveResultSets=true;";
             optionsBuilder.UseSqlServer(contectionString);
 
             return new DataBaseContext(optionsBuilder.Options);

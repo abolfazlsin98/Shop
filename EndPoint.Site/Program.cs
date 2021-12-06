@@ -22,5 +22,8 @@ namespace EndPoint.Site
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        //Database=Shop;User Id=sa;Password=a19901990u;
+
     }
 }

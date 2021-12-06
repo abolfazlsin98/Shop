@@ -53,6 +53,7 @@
                                             <a id="btnAddProduct" class="btn btn-success col-md-12"> افزودن محصول  </a>
                                         </fieldset>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -79,35 +80,7 @@
 
      $(document).ready(function () {
         CKEDITOR.replace('#Description');
-
     });
-
-        //$("#btnAddFeatures").on("click", function () {
-
-        //    var txtDisplayName = $("#txtDisplayName").val();
-        //    var txtValue = $("#txtValue").val();
-
-        //    if (txtDisplayName == "" || txtValue == "") {
-        //        swal.fire(
-        //            'هشدار!',
-        //            "نام و دسته بندی را باید وارد کنید",
-        //            'warning'
-        //        );
-        //    }
-        //    else {
-        //        $('#tbl_Features tbody').append('<tr> <td>' + txtDisplayName + '</td>  <td>' + txtValue + 
-        //        '</td> <td> <a class="idFeatures btnDelete btn btn-danger"> حذف </a> </td> </tr>');
-        //        $("#txtDisplayName").val('');
-        //        $("#txtValue").val('');
-        //    }
-        //});
-
-        //$("#tbl_Features").on('click', '.idFeatures', function () {
-        //    $(this).closest('tr').remove();
-        //});
-
-
-
         $('#btnAddProduct').on('click', function () {
 
             var Name = $("#Name").val();
@@ -124,20 +97,22 @@
              var data = new FormData();
  
             //دریافت مقادیر از تکس باکس ها و....
-            data.append("Name", $("#Name").val());
-            data.append("CategoryId", $('#Category').find('option:selected').val());
-            data.append("Description", $("#Description").val());
+            data.append("Title", $("#Name").val());
+            data.append("BlogCategoryId", $('#Category').find('option:selected').val());
+            data.append("Content", $("#Description").val());
 
 
             //دریافت عکس های انتخاب شده توسط کاربر و قرار دادن عکس ها در متغیر data
             var productImages = document.getElementById("Images");
 
-            if (productImages.files.length > 0) {
-                for (var i = 0; i < productImages.files.length; i++) {
-                    data.append('Images-' + i, productImages.files[i]);
-                }
-            }
+           // if (productImages.files.length > 0) {
+           //     for (var i = 0; i < productImages.files.length; i++) {
+            //        data.append('Images-' + i, productImages.files[i]);
+            //    }
+           // }
             // ارسال اطلاعات بع کنترلر
+
+            console.log("data",data);
             var ajaxRequest = $.ajax({
                 type: "POST",
                 url: "AddNewBlog",

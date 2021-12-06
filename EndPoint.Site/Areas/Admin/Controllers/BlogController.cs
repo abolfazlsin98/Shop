@@ -1,21 +1,25 @@
 ﻿using Bugeto_Store.Application.Services.Blog.Commands.AddBlog;
 using Bugeto_Store.Application.Services.Blog.Commands.AddBlogCategory;
+using Bugeto_Store.Application.Services.Blog.Queries.GetAllCategorieBlogs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
 
     [Area("Admin")]
-    [Authorize("Operator")]
 
     public class BlogController : Controller
     {
         public IAddBlogService _addBlog { get; set; }
-        public BlogController(IAddBlogService addBlog)
+        public IAddBlogCategoryService _addBlogCategory { get; set; }
+        public IGetAllCategorieBlogs _getAllCategorieBlogs { get; set; }
+        public BlogController(IAddBlogService addBlog, IAddBlogCategoryService addBlogCategory, IGetAllCategorieBlogs getAllCategorieBlogs)
         {
             _addBlog = addBlog;
-
+            _addBlogCategory = addBlogCategory;
+            _getAllCategorieBlogs = getAllCategorieBlogs;
         }
 
         [HttpGet]
@@ -26,6 +30,7 @@ namespace EndPoint.Site.Areas.Admin.Controllers
 
         public IActionResult AddNewBlog()
         {
+            ViewBag.Categories = new SelectList(_getAllCategorieBlogs.Execute().Data, "Id", "Name");
             return View();
         }
 
@@ -33,28 +38,23 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddNewBlog(RequestAddBlogDto requestAddBlogDto)
         {
-            if (ModelState.IsValid)
-            {
-                return Json(_addBlog.Execute(requestAddBlogDto));
-                RedirectToAction("Index");
-
-                
-            }
+            return Json(_addBlog.Execute(requestAddBlogDto));
 
             return View();
         }
 
 
-       public IActionResult AddNewCategory()
+        public IActionResult AddNewBlogCategory()
         {
             return View();
         }
 
 
         [HttpPost]
-        public IActionResult AddNewCategory(RequestAddCategoryBlogDto requestAddCategoryBlogDto)
+        public IActionResult AddNewBlogCategory(string name)
         {
-            return View();
+            RedirectToAction("Index");
+            return Json(_addBlogCategory.Execute(name));
         }
 
     }

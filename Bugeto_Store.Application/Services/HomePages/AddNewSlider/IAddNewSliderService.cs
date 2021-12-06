@@ -44,48 +44,47 @@ namespace Bugeto_Store.Application.Services.HomePages.AddNewSlider
 
             return new ResultDto()
             {
-                IsSuccess = true
+                IsSuccess = true,
+                Message = "اسلایدر با موفقیت اضافه شد"
             };
 
-    }
-    private UploadDto UploadFile(IFormFile file)
-    {
-        if (file != null)
+        }
+        private UploadDto UploadFile(IFormFile file)
         {
-            string folder = $@"images\HomePages\Slider\";
-            var uploadsRootFolder = Path.Combine(_environment.WebRootPath, folder);
-            if (!Directory.Exists(uploadsRootFolder))
+            if (file != null)
             {
-                Directory.CreateDirectory(uploadsRootFolder);
-            }
+                string folder = $@"images\HomePages\Slider\";
+                var uploadsRootFolder = Path.Combine(_environment.WebRootPath, folder);
+                if (!Directory.Exists(uploadsRootFolder))
+                {
+                    Directory.CreateDirectory(uploadsRootFolder);
+                }
 
 
-            if (file == null || file.Length == 0)
-            {
+                if (file == null || file.Length == 0)
+                {
+                    return new UploadDto()
+                    {
+                        Status = false,
+                        FileNameAddress = "",
+                    };
+                }
+
+                string fileName = DateTime.Now.Ticks.ToString() + file.FileName;
+                var filePath = Path.Combine(uploadsRootFolder, fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
                 return new UploadDto()
                 {
-                    Status = false,
-                    FileNameAddress = "",
+                    FileNameAddress = folder + fileName,
+                    Status = true,
                 };
             }
-
-            string fileName = DateTime.Now.Ticks.ToString() + file.FileName;
-            var filePath = Path.Combine(uploadsRootFolder, fileName);
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                file.CopyTo(fileStream);
-            }
-
-            return new UploadDto()
-            {
-                FileNameAddress = folder + fileName,
-                Status = true,
-            };
+            return null;
         }
-        return null;
     }
-}
-
-
 
 }

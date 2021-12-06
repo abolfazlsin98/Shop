@@ -38,6 +38,8 @@ using Bugeto_Store.Application.Services.Orders.Queries.GetUserOrders;
 using Bugeto_Store.Application.Services.Orders.Queries.GetOrdersForAdmin;
 using Bugeto_Store.Application.Services.Fainances.Queries.GetRequestPayForAdmin;
 using Bugeto_Store.Application.Services.Blog.Commands.AddBlog;
+using Bugeto_Store.Application.Services.Blog.Commands.AddBlogCategory;
+using Bugeto_Store.Application.Services.Blog.Queries.GetAllCategorieBlogs;
 
 namespace EndPoint.Site
 {
@@ -75,13 +77,13 @@ namespace EndPoint.Site
 
 
             services.AddScoped<IDataBaseContext, DataBaseContext>();
-            services.AddScoped<IGetUsersService,  GetUsersService>();
-            services.AddScoped<IGetRolesService,  GetRolesService>();
-            services.AddScoped<IRegisterUserService,  RegisterUserService>();
-            services.AddScoped<IRemoveUserService,  RemoveUserService>();
+            services.AddScoped<IGetUsersService, GetUsersService>();
+            services.AddScoped<IGetRolesService, GetRolesService>();
+            services.AddScoped<IRegisterUserService, RegisterUserService>();
+            services.AddScoped<IRemoveUserService, RemoveUserService>();
             services.AddScoped<IUserLoginService, UserLoginService>();
-            services.AddScoped<IUserSatusChangeService,  UserSatusChangeService>();
-            services.AddScoped<IEditUserService,  EditUserService>();
+            services.AddScoped<IUserSatusChangeService, UserSatusChangeService>();
+            services.AddScoped<IEditUserService, EditUserService>();
 
             //FacadeInject
             services.AddScoped<IProductFacad, ProductFacad>();
@@ -90,20 +92,22 @@ namespace EndPoint.Site
             //------------------
             services.AddScoped<IGetMenuItemService, GetMenuItemService>();
             services.AddScoped<IGetCategoryService, GetCategoryService>();
-            services.AddScoped<IAddNewSliderService,  AddNewSliderService>();
+            services.AddScoped<IAddNewSliderService, AddNewSliderService>();
             services.AddScoped<IGetSliderService, GetSliderService>();
-            services.AddScoped<IAddHomePageImagesService,  AddHomePageImagesService>();
+            services.AddScoped<IAddHomePageImagesService, AddHomePageImagesService>();
             services.AddScoped<IGetHomePageImagesService, GetHomePageImagesService>();
             services.AddScoped<IAddBlogService, AddBlogService>();
+            services.AddScoped<IAddBlogCategoryService, AddBlogCategoryService>();
+            services.AddScoped<IGetAllCategorieBlogs, GetAllCategorieBlogs>();
 
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IAddRequestPayService, AddRequestPayService>();
-            services.AddScoped<IGetRequestPayService,  GetRequestPayService>();
-            services.AddScoped<IAddNewOrderService,  AddNewOrderService>();
-            services.AddScoped<IGetUserOrdersService,  GetUserOrdersService>();
-            services.AddScoped<IGetOrdersForAdminService,  GetOrdersForAdminService>();
-            services.AddScoped<IGetRequestPayForAdminService,  GetRequestPayForAdminService>();
-       
+            services.AddScoped<IGetRequestPayService, GetRequestPayService>();
+            services.AddScoped<IAddNewOrderService, AddNewOrderService>();
+            services.AddScoped<IGetUserOrdersService, GetUserOrdersService>();
+            services.AddScoped<IGetOrdersForAdminService, GetOrdersForAdminService>();
+            services.AddScoped<IGetRequestPayForAdminService, GetRequestPayForAdminService>();
+
 
 
 
@@ -131,7 +135,7 @@ namespace EndPoint.Site
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 

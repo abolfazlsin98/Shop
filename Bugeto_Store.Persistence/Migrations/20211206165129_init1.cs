@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bugeto_Store.Persistence.Migrations
 {
-    public partial class addblog12 : Migration
+    public partial class init1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -530,12 +530,12 @@ namespace Bugeto_Store.Persistence.Migrations
                 columns: new[] { "Id", "ImageLocation", "InsertTime", "IsRemoved", "RemoveTime", "Src", "UpdateTime", "link" },
                 values: new object[,]
                 {
-                    { 1L, 0, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3004), false, null, "images\\HomePages\\Slider\\637742949830874456637316263744270286sm-1.jpg", null, null },
-                    { 2L, 1, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3625), false, null, "images\\HomePages\\Slider\\637742949941898292637316430621882982a-4.jpg", null, null },
-                    { 3L, 3, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3635), false, null, "images\\HomePages\\Slider\\637316430895780623a-4.jpg", null, null },
-                    { 4L, 6, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3637), false, null, "images\\HomePages\\Slider\\637316430895780623a-4.jpg", null, null },
-                    { 5L, 4, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3640), false, null, "images\\HomePages\\Slider\\637316277407677837sm-3.jpg", null, null },
-                    { 6L, 5, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(3642), false, null, "images\\HomePages\\Slider\\637316430895780623a-4.jpg", null, null }
+                    { 1L, 0, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(3917), false, null, "images\\HomePages\\Slider\\637742949830874456637316263744270286sm-1.jpg", null, null },
+                    { 2L, 1, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4379), false, null, "images\\HomePages\\Slider\\637742949941898292637316430621882982a-4.jpg", null, null },
+                    { 3L, 3, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4387), false, null, "images\\HomePages\\Slider\\637316430895780623a-4.jpg", null, null },
+                    { 4L, 6, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4389), false, null, "images\\HomePages\\Slider\\637316430895780623a-4.jpg", null, null },
+                    { 5L, 4, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4391), false, null, "images\\HomePages\\Slider\\637316277407677837sm-3.jpg", null, null },
+                    { 6L, 5, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(4393), false, null, "images\\HomePages\\Slider\\637316430895780623a-4.jpg", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -543,9 +543,9 @@ namespace Bugeto_Store.Persistence.Migrations
                 columns: new[] { "Id", "InsertTime", "IsRemoved", "Name", "RemoveTime", "UpdateTime" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2021, 12, 6, 15, 16, 11, 441, DateTimeKind.Local).AddTicks(1251), false, "Admin", null, null },
-                    { 2L, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(2502), false, "Operator", null, null },
-                    { 3L, new DateTime(2021, 12, 6, 15, 16, 11, 444, DateTimeKind.Local).AddTicks(2604), false, "Customer", null, null }
+                    { 1L, new DateTime(2021, 12, 6, 8, 51, 29, 294, DateTimeKind.Local).AddTicks(2031), false, "Admin", null, null },
+                    { 2L, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(3414), false, "Operator", null, null },
+                    { 3L, new DateTime(2021, 12, 6, 8, 51, 29, 297, DateTimeKind.Local).AddTicks(3531), false, "Customer", null, null }
                 });
 
             migrationBuilder.CreateIndex(

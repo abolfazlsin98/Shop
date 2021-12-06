@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
-   [Area("Admin")]
+    [Area("Admin")]
     public class SlidersController : Controller
     {
         private readonly IAddNewSliderService _addNewSliderService;
@@ -28,10 +28,10 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(IFormFile file , string link)
+        public IActionResult Add(IFormFile file, string link)
         {
             _addNewSliderService.Execute(file, link);
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

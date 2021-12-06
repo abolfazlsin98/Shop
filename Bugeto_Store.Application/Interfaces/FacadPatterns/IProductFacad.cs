@@ -1,5 +1,6 @@
 ﻿using Bugeto_Store.Application.Services.Products.Commands.AddNewCategory;
 using Bugeto_Store.Application.Services.Products.Commands.AddNewProduct;
+using Bugeto_Store.Application.Services.Products.Commands.DeleteProduct;
 using Bugeto_Store.Application.Services.Products.Queries.GetAllCategories;
 using Bugeto_Store.Application.Services.Products.Queries.GetCategories;
 using Bugeto_Store.Application.Services.Products.Queries.GetProductDetailForAdmin;
@@ -20,6 +21,7 @@ namespace Bugeto_Store.Application.Interfaces.FacadPatterns
         IGetCategoriesService GetCategoriesService { get; }
         AddNewProductService AddNewProductService { get; }
         IGetAllCategoriesService GetAllCategoriesService { get; }
+        IDeleteProductService DeleteProductService { get; }
         /// <summary>
         /// دریافت لیست محصولات
         /// </summary>

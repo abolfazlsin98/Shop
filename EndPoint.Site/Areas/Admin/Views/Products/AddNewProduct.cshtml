@@ -215,11 +215,7 @@
                 data.append('[' + i + '].Value', val.Value);
 
             });
-
-
-
-
-
+             console.log("data",data);
             // ارسال اطلاعات بع کنترلر
             var ajaxRequest = $.ajax({
                 type: "POST",
@@ -235,7 +231,7 @@
                             data.message,
                             'success'
                         ).then(function (isConfirm) {
-                            window.location.href = "/Admin/Products/";
+                            window.location.replace("/Admin/Products/")
                         });
                     }
                     else {
