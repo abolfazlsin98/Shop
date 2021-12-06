@@ -4,6 +4,7 @@ using Bugeto_Store.Domain.Entities.HomePages;
 using Bugeto_Store.Domain.Entities.Orders;
 using Bugeto_Store.Domain.Entities.Products;
 using Bugeto_Store.Domain.Entities.Users;
+using Bugeto_Store.Domain.Entities.Blog;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,14 @@ namespace Bugeto_Store.Application.Interfaces.Contexts
           DbSet<RequestPay>      RequestPays { get; set; }
           DbSet<Order> Orders { get; set; }
           DbSet<OrderDetail>  OrderDetails { get; set; }
+
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+        public DbSet<BlogInTags> BlogInTags { get; set; }
+        public DbSet<Tags> Tags { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
 
         int SaveChanges(bool acceptAllChangesOnSuccess);
         int SaveChanges();

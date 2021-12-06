@@ -37,6 +37,7 @@ using Bugeto_Store.Application.Services.Orders.Commands.AddNewOrder;
 using Bugeto_Store.Application.Services.Orders.Queries.GetUserOrders;
 using Bugeto_Store.Application.Services.Orders.Queries.GetOrdersForAdmin;
 using Bugeto_Store.Application.Services.Fainances.Queries.GetRequestPayForAdmin;
+using Bugeto_Store.Application.Services.Blog.Commands.AddBlog;
 
 namespace EndPoint.Site
 {
@@ -93,6 +94,7 @@ namespace EndPoint.Site
             services.AddScoped<IGetSliderService, GetSliderService>();
             services.AddScoped<IAddHomePageImagesService,  AddHomePageImagesService>();
             services.AddScoped<IGetHomePageImagesService, GetHomePageImagesService>();
+            services.AddScoped<IAddBlogService, AddBlogService>();
 
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IAddRequestPayService, AddRequestPayService>();
@@ -123,6 +125,8 @@ namespace EndPoint.Site
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //app.UseStatusCodePagesWithReExecute("/Home/HandleError/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -130,7 +134,8 @@ namespace EndPoint.Site
             
             app.UseAuthentication();
             app.UseAuthorization();
-           
+
+            app.UseStatusCodePages();
 
             app.UseEndpoints(endpoints =>
             {
@@ -144,6 +149,12 @@ namespace EndPoint.Site
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             });
+            //app.Run(context =>
+            //{
+            //    context.Response.StatusCode = 404;
+            //    return Task.FromResult(0);
+            //});
+
         }
     }
 }

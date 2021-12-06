@@ -19,6 +19,241 @@ namespace Bugeto_Store.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.Author", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Authors");
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.BlogCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogCategories");
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.BlogInTags", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BlogPostId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("TagsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogPostId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("BlogInTags");
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.BlogPost", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BlogCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Published")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Src")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BlogCategoryId");
+
+                    b.ToTable("BlogPosts");
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("BlogPostId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Published")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.Tags", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Published")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("Bugeto_Store.Domain.Entities.Carts.Cart", b =>
                 {
                     b.Property<long>("Id")
@@ -180,7 +415,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 1L,
                             ImageLocation = 0,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(1665),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(2081),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637742949830874456637316263744270286sm-1.jpg"
                         },
@@ -188,7 +423,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 2L,
                             ImageLocation = 1,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(2273),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(2730),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637742949941898292637316430621882982a-4.jpg"
                         },
@@ -196,7 +431,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 3L,
                             ImageLocation = 3,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(2285),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(2741),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316430895780623a-4.jpg"
                         },
@@ -204,7 +439,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 4L,
                             ImageLocation = 6,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(2287),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(2744),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316430895780623a-4.jpg"
                         },
@@ -212,7 +447,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 5L,
                             ImageLocation = 4,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(2290),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(2746),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316277407677837sm-3.jpg"
                         },
@@ -220,7 +455,7 @@ namespace Bugeto_Store.Persistence.Migrations
                         {
                             Id = 6L,
                             ImageLocation = 5,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(2292),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(2749),
                             IsRemoved = false,
                             Src = "images\\HomePages\\Slider\\637316430895780623a-4.jpg"
                         });
@@ -517,21 +752,21 @@ namespace Bugeto_Store.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 104, DateTimeKind.Local).AddTicks(8525),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 411, DateTimeKind.Local).AddTicks(7553),
                             IsRemoved = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(1144),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(1595),
                             IsRemoved = false,
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2021, 12, 5, 10, 44, 47, 108, DateTimeKind.Local).AddTicks(1253),
+                            InsertTime = new DateTime(2021, 12, 6, 15, 17, 10, 415, DateTimeKind.Local).AddTicks(1694),
                             IsRemoved = false,
                             Name = "Customer"
                         });
@@ -543,6 +778,9 @@ namespace Bugeto_Store.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("AuthorId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
@@ -609,6 +847,58 @@ namespace Bugeto_Store.Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserInRoles");
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.Author", b =>
+                {
+                    b.HasOne("Bugeto_Store.Domain.Entities.Users.User", "User")
+                        .WithOne("Author")
+                        .HasForeignKey("Bugeto_Store.Domain.Entities.Blog.Author", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.BlogInTags", b =>
+                {
+                    b.HasOne("Bugeto_Store.Domain.Entities.Blog.BlogPost", "BlogPost")
+                        .WithMany()
+                        .HasForeignKey("BlogPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bugeto_Store.Domain.Entities.Blog.Tags", "Tags")
+                        .WithMany("BlogInTags")
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.BlogPost", b =>
+                {
+                    b.HasOne("Bugeto_Store.Domain.Entities.Blog.Author", "Author")
+                        .WithMany("BlogPosts")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bugeto_Store.Domain.Entities.Blog.BlogCategory", "BlogCategory")
+                        .WithMany("BlogPosts")
+                        .HasForeignKey("BlogCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Bugeto_Store.Domain.Entities.Blog.Comment", b =>
+                {
+                    b.HasOne("Bugeto_Store.Domain.Entities.Blog.BlogPost", "BlogPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Bugeto_Store.Domain.Entities.Users.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Bugeto_Store.Domain.Entities.Carts.Cart", b =>
