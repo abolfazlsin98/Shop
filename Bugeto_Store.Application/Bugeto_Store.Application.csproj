@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\Blog\Commands\DeleteBlog\" />
+    <Folder Include="Services\Blog\Commands\UpdateBlog\" />
     <Folder Include="Services\Common\Commands\" />
   </ItemGroup>
 
