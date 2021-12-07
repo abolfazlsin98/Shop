@@ -24,8 +24,9 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
         {
             try
             {
-                var blogCategory = _context.BlogCategories.Find(request.BlogCategoryId);
-                var author = _context.Authors.Find(1);
+                var blogCategory = _context.BlogCategories.FirstOrDefault(b=>b.Name ==   request.BlogCategoryName);
+                long addad = 1;
+                var author = _context.Authors.Find(addad);
                 BlogPost blogPost = new BlogPost()
                 {
                     Author = author,
@@ -50,7 +51,7 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
                 return new ResultDto
                 {
                     IsSuccess = false,
-                    Message = "خطا رخ داد ",
+                    Message = "خطایی رخ داد ",
                 };
             }
         }
@@ -62,15 +63,15 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
         [Required]
         public string Title { get; set; }
 
-        // [Required]
-        // public IFormFile Src { get; set; }
+         //[Required]
+         //public List< IFormFile> Images { get; set; }
 
         [Required]
         public string Content { get; set; }
 
         [Required]
-        public long BlogCategoryId { get; set; }
-        [Required]
+        public string BlogCategoryName { get; set; }
+       // [Required]
         public long AuthorId { get; set; }
 
     }

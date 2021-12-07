@@ -17,17 +17,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace Bugeto_Store.Persistence.Contexts
 {
-    public class DataBaseContext : DbContext, IDataBaseContext
+    public class DataBaseContext : IdentityDbContext<UserApp> , IDataBaseContext
     {
         public DataBaseContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserInRole> UserInRoles { get; set; }
+        //public DbSet<User> Users { get; set; }
+        //public DbSet<Role> Roles { get; set; }
+        //public DbSet<UserInRole> UserInRoles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImages> ProductImages { get; set; }
@@ -50,6 +53,51 @@ namespace Bugeto_Store.Persistence.Contexts
         public DbSet<Comment> Comments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
+
+            var userId = Guid.NewGuid().ToString();
+            var adminRoleId = Guid.NewGuid().ToString();
+            var customerRoleId = Guid.NewGuid().ToString();
+            var operatorRoleId = Guid.NewGuid().ToString();
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole()
+            {
+                Id = adminRoleId,
+                Name = "Admin",
+                NormalizedName = "admin"
+            }, new IdentityRole()
+            {
+                Id = adminRoleId,
+                Name = "Operator",
+                NormalizedName = "operator"
+            }, new IdentityRole()
+            {
+                Id = customerRoleId,
+                Name = "Customer",
+                NormalizedName = "customer"
+            });
+
+
+            var hasher = new PasswordHasher<UserApp>();
+            modelBuilder.Entity<UserApp>().HasData(new UserApp()
+            {
+                Id = userId,
+                Email = "abolfazlsin98@admin.com",
+                NormalizedEmail = "abolfazlsin98@admin.com",
+                FullName = "ابوالفضل آهنگر",
+                EmailConfirmed = true,
+                UserName = "abolfazl",
+                NormalizedUserName = "abolfazl",
+                PasswordHash = hasher.HashPassword(null, "19901990"),
+                SecurityStamp = string.Empty
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>()
+            {
+                RoleId = adminRoleId,
+                UserId = userId
+            });
+
             modelBuilder.Entity<Order>()
                 .HasOne(p => p.User)
                 .WithMany(p => p.Orders)
@@ -87,10 +135,10 @@ namespace Bugeto_Store.Persistence.Contexts
 
             // اعمال ایندکس بر روی فیلد ایمیل
             // اعمال عدم تکراری بودن ایمیل
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+           // modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
             //-- عدم نمایش اطلاعات حذف شده
-            ApplyQueryFilter(modelBuilder);
+            //ApplyQueryFilter(modelBuilder);
         }
 
         private void ApplyQueryFilter(ModelBuilder modelBuilder)
@@ -113,9 +161,9 @@ namespace Bugeto_Store.Persistence.Contexts
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = nameof(UserRoles.Admin) });
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = nameof(UserRoles.Operator) });
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = nameof(UserRoles.Customer) });
+            //modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = nameof(UserRoles.Admin) });
+            //modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = nameof(UserRoles.Operator) });
+            //modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = nameof(UserRoles.Customer) });
 
 
             modelBuilder.Entity<HomePageImages>().HasData(new HomePageImages { Id = 1, Src = @"images\HomePages\Slider\637742949830874456637316263744270286sm-1.jpg", ImageLocation = ImageLocation.L1 },
@@ -205,17 +253,17 @@ namespace Bugeto_Store.Persistence.Contexts
     }
 
 
-    public class DataBaseContextFactory : IDesignTimeDbContextFactory<DataBaseContext>
-    {
-        public DataBaseContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
-            string contectionString = "Server=.; Initial Catalog=Bugeto_StoreDb; Integrated Security=True;MultipleActiveResultSets=true;";
-            optionsBuilder.UseSqlServer(contectionString);
+    //public class DataBaseContextFactory : IDesignTimeDbContextFactory<DataBaseContext>
+    //{
+    //    public DataBaseContext CreateDbContext(string[] args)
+    //    {
+    //        var optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
+    //        string contectionString = "Server=.;Database=Shop;User Id=sa;Password=19901990;MultipleActiveResultSets=true;";
+    //        optionsBuilder.UseSqlServer(contectionString);
 
-            return new DataBaseContext(optionsBuilder.Options);
-        }
-    }
+    //        return new DataBaseContext(optionsBuilder.Options);
+    //    }
+    //}
 
 
 

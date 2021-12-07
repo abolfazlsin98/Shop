@@ -2,8 +2,10 @@
 using Bugeto_Store.Application.Services.Blog.Commands.AddBlogCategory;
 using Bugeto_Store.Application.Services.Blog.Queries.GetAllCategorieBlogs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
@@ -38,9 +40,16 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddNewBlog(RequestAddBlogDto requestAddBlogDto)
         {
+
+            //List<IFormFile> images = new List<IFormFile>();
+            //for (int i = 0; i < Request.Form.Files.Count; i++)
+            //{
+            //    var file = Request.Form.Files[i];
+            //    images.Add(file);
+            //}
+            //requestAddBlogDto.Images = images;
             return Json(_addBlog.Execute(requestAddBlogDto));
 
-            return View();
         }
 
 

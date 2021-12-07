@@ -26,6 +26,7 @@ namespace Bugeto_Store.Application.Services.Common.Queries.GetSlider
             var sliders = _context.Sliders.OrderByDescending(p => p.Id).ToList().Select(
                 p => new SliderDto
                 {
+                    Id = p.Id,
                     Link=p.link,
                     Src=p.Src,
                 }).ToList();
@@ -38,8 +39,9 @@ namespace Bugeto_Store.Application.Services.Common.Queries.GetSlider
         }
     }
 
-    public   class SliderDto
+    public class SliderDto
     {
+        public long Id { get; set; }
         public string   Src { get; set; }
         public string   Link { get; set; }
     }

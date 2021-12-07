@@ -40,6 +40,13 @@ using Bugeto_Store.Application.Services.Fainances.Queries.GetRequestPayForAdmin;
 using Bugeto_Store.Application.Services.Blog.Commands.AddBlog;
 using Bugeto_Store.Application.Services.Blog.Commands.AddBlogCategory;
 using Bugeto_Store.Application.Services.Blog.Queries.GetAllCategorieBlogs;
+using Bugeto_Store.Application.Services.Common.Sliders;
+using Bugeto_Store.Application.Services.Common.HomePageImages;
+using Bugeto_Store.Domain.Entities.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace EndPoint.Site
 {
@@ -55,6 +62,23 @@ namespace EndPoint.Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataBaseContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("develop")));
+            services.AddHttpClient();
+            services.AddIdentity<UserApp, IdentityRole>(options =>
+            {
+                options.Password.RequiredUniqueChars = 0;
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireNonAlphanumeric = false;
+
+            })
+                .AddEntityFrameworkStores<DataBaseContext>().AddDefaultTokenProviders().AddDefaultUI();
 
             services.AddAuthorization(options =>
             {
@@ -63,17 +87,90 @@ namespace EndPoint.Site
                 options.AddPolicy(UserRoles.Operator, policy => policy.RequireRole(UserRoles.Operator));
             });
 
+
+
             services.AddAuthentication(options =>
             {
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(options =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
+          // Adding Jwt Bearer  
+          .AddJwtBearer(options =>
+          {
+              options.SaveToken = true;
+              options.RequireHttpsMetadata = false;
+              options.TokenValidationParameters = new TokenValidationParameters()
+              {
+                  ValidateIssuer = true,
+                  ValidateAudience = true,
+                  ValidateLifetime = true,
+                  ValidateIssuerSigningKey = true,
+                  ValidAudience = Configuration["JWT:ValidAudience"],
+                  ValidIssuer = Configuration["JWT:ValidIssuer"],
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+              };
+          });
+
+
+            
+
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.IgnoreObsoleteActions();
+            //    c.SwaggerDoc("v1", new OpenApiInfo()
+            //    {
+            //        Title = "CarOnline api",
+            //        Version = "v1",
+            //        Description = "CarOnline api develop by Asp.net core 5 \r\n\r\n  identity \r\n\r\n  ef core ",
+            //        Contact =
+            //            new OpenApiContact()
+            //            {
+            //                Email = "MostafaHosseini9310@gmail.com",
+            //                Url = new Uri("https://Mostafa-h.ir"),
+            //                Name = "Mostafa Hosseini"
+            //            }
+            //    });
+            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            //    {
+            //        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+            //          Enter 'Bearer' [space] and then your token in the text input below.
+            //          \r\n\r\nExample: 'Bearer 12345abcdef'",
+            //        Name = "Authorization",
+            //        In = ParameterLocation.Header,
+            //        Type = SecuritySchemeType.ApiKey,
+            //        Scheme = "Bearer"
+            //    });
+
+            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            //    {
+            //        {
+            //            new OpenApiSecurityScheme
+            //            {
+            //                Reference = new OpenApiReference
+            //                {
+            //                    Type = ReferenceType.SecurityScheme,
+            //                    Id = "Bearer"
+            //                },
+            //                Scheme = "oauth2",
+            //                Name = "Bearer",
+            //                In = ParameterLocation.Header,
+            //            },
+            //            new List<string>()
+            //        }
+            //    });
+            //});
+
+
+
+
+            services.AddCors(o => o.AddPolicy("AllowAllPolicy", builder =>
             {
-                options.LoginPath = new PathString("/Authentication/Signin");
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
-                options.AccessDeniedPath = new PathString("/Authentication/Signin");
-            });
+                builder
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin();
+            }));
 
 
             services.AddScoped<IDataBaseContext, DataBaseContext>();
@@ -109,10 +206,14 @@ namespace EndPoint.Site
             services.AddScoped<IGetRequestPayForAdminService, GetRequestPayForAdminService>();
 
 
+            // news
+            services.AddScoped<ISliderService, SliderService>();
+            services.AddScoped<IHomePageImagesService, HomePageImagesService>();
+
 
 
             //string contectionString = @"Data Source=DESKTOP-ILQ6NEU\MSSQLSERVER2019; Initial Catalog=Bugeto_StoreDb; Integrated Security=True;";
-            services.AddEntityFrameworkSqlServer().AddDbContext<DataBaseContext>(option => option.UseSqlServer(Configuration.GetConnectionString("develop")));
+            //services.AddEntityFrameworkSqlServer().AddDbContext<DataBaseContext>(option => option.UseSqlServer(Configuration.GetConnectionString("develop")));
             services.AddControllersWithViews();
         }
 
@@ -150,7 +251,7 @@ namespace EndPoint.Site
 
                 endpoints.MapControllerRoute(
                    name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Users}/{action=Index}/{id?}");
 
             });
             //app.Run(context =>

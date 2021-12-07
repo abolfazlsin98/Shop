@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bugeto_Store.Application.Services.Common.HomePageImages;
 using Bugeto_Store.Application.Services.HomePages.AddHomePageImages;
 using Bugeto_Store.Domain.Entities.HomePages;
 using Microsoft.AspNetCore.Http;
@@ -13,13 +14,19 @@ namespace EndPoint.Site.Areas.Admin.Controllers
     public class HomePageImagesController : Controller
     {
         private readonly IAddHomePageImagesService _addHomePageImagesService;
-        public HomePageImagesController(IAddHomePageImagesService addHomePageImagesService)
+
+
+        private readonly IHomePageImagesService _homePageImagesService;
+        public HomePageImagesController(IAddHomePageImagesService addHomePageImagesService , IHomePageImagesService homePageImagesService)
         {
             _addHomePageImagesService = addHomePageImagesService;
+
+            _homePageImagesService = homePageImagesService;
         }
         public IActionResult Index()
         {
-            return View();
+           
+            return View(_homePageImagesService.GetAll().Data);
         }
 
 
@@ -38,6 +45,15 @@ namespace EndPoint.Site.Areas.Admin.Controllers
                 Link = link,
             });
             return View();
+        }
+
+
+        [HttpDelete]
+        public IActionResult Delete(long id)
+        {
+
+            return Json(_homePageImagesService.Delete(id));
+
         }
 
     }
