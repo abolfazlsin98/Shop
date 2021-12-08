@@ -47,6 +47,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Bugeto_Store.Application.Services.Blog;
 
 namespace EndPoint.Site
 {
@@ -62,23 +63,24 @@ namespace EndPoint.Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataBaseContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("develop")));
+          
             services.AddHttpClient();
-            services.AddIdentity<UserApp, IdentityRole>(options =>
-            {
-                options.Password.RequiredUniqueChars = 0;
+            //services.AddIdentity<UserApp, IdentityRole>(options =>
+            //{
+            //    options.Password.RequiredUniqueChars = 0;
 
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 0;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredUniqueChars = 0;
-                options.Password.RequireNonAlphanumeric = false;
+            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequiredLength = 0;
+            //    options.Password.RequireLowercase = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.Password.RequiredUniqueChars = 0;
+            //    options.Password.RequireNonAlphanumeric = false;
 
-            })
-                .AddEntityFrameworkStores<DataBaseContext>().AddDefaultTokenProviders().AddDefaultUI();
+            //})
+            //    .AddEntityFrameworkStores<DataBaseContext>().AddDefaultTokenProviders().AddDefaultUI();
+
+
 
             services.AddAuthorization(options =>
             {
@@ -87,83 +89,17 @@ namespace EndPoint.Site
                 options.AddPolicy(UserRoles.Operator, policy => policy.RequireRole(UserRoles.Operator));
             });
 
-
-
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-
-          // Adding Jwt Bearer  
-          .AddJwtBearer(options =>
-          {
-              options.SaveToken = true;
-              options.RequireHttpsMetadata = false;
-              options.TokenValidationParameters = new TokenValidationParameters()
-              {
-                  ValidateIssuer = true,
-                  ValidateAudience = true,
-                  ValidateLifetime = true,
-                  ValidateIssuerSigningKey = true,
-                  ValidAudience = Configuration["JWT:ValidAudience"],
-                  ValidIssuer = Configuration["JWT:ValidIssuer"],
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
-              };
-          });
-
-
-            
-
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.IgnoreObsoleteActions();
-            //    c.SwaggerDoc("v1", new OpenApiInfo()
-            //    {
-            //        Title = "CarOnline api",
-            //        Version = "v1",
-            //        Description = "CarOnline api develop by Asp.net core 5 \r\n\r\n  identity \r\n\r\n  ef core ",
-            //        Contact =
-            //            new OpenApiContact()
-            //            {
-            //                Email = "MostafaHosseini9310@gmail.com",
-            //                Url = new Uri("https://Mostafa-h.ir"),
-            //                Name = "Mostafa Hosseini"
-            //            }
-            //    });
-            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //    {
-            //        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-            //          Enter 'Bearer' [space] and then your token in the text input below.
-            //          \r\n\r\nExample: 'Bearer 12345abcdef'",
-            //        Name = "Authorization",
-            //        In = ParameterLocation.Header,
-            //        Type = SecuritySchemeType.ApiKey,
-            //        Scheme = "Bearer"
-            //    });
-
-            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-            //    {
-            //        {
-            //            new OpenApiSecurityScheme
-            //            {
-            //                Reference = new OpenApiReference
-            //                {
-            //                    Type = ReferenceType.SecurityScheme,
-            //                    Id = "Bearer"
-            //                },
-            //                Scheme = "oauth2",
-            //                Name = "Bearer",
-            //                In = ParameterLocation.Header,
-            //            },
-            //            new List<string>()
-            //        }
-            //    });
-            //});
-
-
-
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Authentication/Signin");
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
+                options.AccessDeniedPath = new PathString("/Authentication/Signin");
+            });
 
             services.AddCors(o => o.AddPolicy("AllowAllPolicy", builder =>
             {
@@ -211,9 +147,12 @@ namespace EndPoint.Site
             services.AddScoped<IHomePageImagesService, HomePageImagesService>();
 
 
+            services.AddScoped<IBlogService, BlogService>();
+
+
 
             //string contectionString = @"Data Source=DESKTOP-ILQ6NEU\MSSQLSERVER2019; Initial Catalog=Bugeto_StoreDb; Integrated Security=True;";
-            //services.AddEntityFrameworkSqlServer().AddDbContext<DataBaseContext>(option => option.UseSqlServer(Configuration.GetConnectionString("develop")));
+            services.AddEntityFrameworkSqlServer().AddDbContext<DataBaseContext>(option => option.UseSqlServer(Configuration.GetConnectionString("develop")));
             services.AddControllersWithViews();
         }
 
@@ -226,13 +165,16 @@ namespace EndPoint.Site
             }
             else
             {
+                app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            app.UseCors("AllowAllPolicy");
+
             //app.UseStatusCodePagesWithReExecute("/Home/HandleError/{0}");
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -245,13 +187,16 @@ namespace EndPoint.Site
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                  name: "areas",
+                   pattern: "{area:exists}/{controller=Users}/{action=Index}/{id?}");
+
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-                endpoints.MapControllerRoute(
-                   name: "areas",
-                    pattern: "{area:exists}/{controller=Users}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
 
             });
             //app.Run(context =>

@@ -1,35 +1,38 @@
 ﻿using Bugeto_Store.Application.Interfaces.Contexts;
+using Bugeto_Store.Application.Services.Blog.Commands.AddBlog;
+using Bugeto_Store.Application.Services.Blog.Queries.GetAllBlogs;
+using Bugeto_Store.Application.Services.Blog.Queries.GetAllCategorieBlogs;
 using Bugeto_Store.Common.Dto;
 using Bugeto_Store.Domain.Entities.Blog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
+namespace Bugeto_Store.Application.Services.Blog
 {
-    public class AddBlogService : IAddBlogService
+    public class BlogService : IBlogService
     {
         private readonly IDataBaseContext _context;
 
         private readonly IHostingEnvironment _environment;
 
-        public AddBlogService(IDataBaseContext context, IHostingEnvironment hostingEnvironment)
+        public BlogService(IDataBaseContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _environment = hostingEnvironment;
         }
 
-        public ResultDto Execute(RequestAddBlogDto request)
+        public ResultDto AddBlog(RequestAddBlogDto request)
         {
+
             try
             {
-                var blogCategory = _context.BlogCategories.FirstOrDefault(b=>b.Name ==   request.BlogCategoryName);
+                var blogCategory = _context.BlogCategories.FirstOrDefault(b => b.Name == request.BlogCategoryName);
                 long addad = 1;
                 var author = _context.Authors.Find(addad);
                 BlogPost blogPost = new BlogPost()
@@ -42,7 +45,6 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
 
                 _context.BlogPosts.Add(blogPost);
 
-
                 List<BlogImage> blogImages = new List<BlogImage>();
                 foreach (var item in request.Images)
                 {
@@ -54,9 +56,18 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
                     });
                 }
 
-
                 _context.BlogImages.AddRange(blogImages);
 
+                List<BlogInTags> blogInTags = new List<BlogInTags>();
+                foreach (var item in request.BlogInTags)
+                {
+                    blogInTags.Add(new BlogInTags
+                    {
+                        BlogPost = blogPost,
+                        Tags = new Tags { Name = item.Name },
+                    });
+                }
+                
                 _context.SaveChanges();
 
                 return new ResultDto
@@ -64,7 +75,6 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
                     IsSuccess = true,
                     Message = "بلاگ با موفقیت پست شد",
                 };
-
 
             }
             catch (Exception ex)
@@ -76,6 +86,22 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
                 };
             }
         }
+
+        public ResultDto AddBlogCategory(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResultDto<List<AllBlogsDto>> GetAllBlog()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResultDto<List<AllBlogCategoriesDto>> GetAllBlogCategory()
+        {
+            throw new NotImplementedException();
+        }
+
 
         private UploadDto UploadFile(IFormFile file)
         {
@@ -122,5 +148,4 @@ namespace Bugeto_Store.Application.Services.Blog.Commands.AddBlog
         }
 
     }
-  
 }

@@ -16,21 +16,21 @@ namespace Bugeto_Store.Domain.Entities.Blog
         [Required]
         public string Content { get; set; }
 
-       // [ForeignKey("BlogPost")]
-       // [Required]
+        [ForeignKey("BlogPost")]
+        [Required]
 
         public long? BlogPostId { get; set; }
-       // [Required]
+        [Required]
         public virtual BlogPost BlogPost { get; set; }
 
         public bool IsAccepted { get; set; } = true;
 
         public bool IsAdmin { get; set; } = false;
 
-       // [ForeignKey("User")]
-       // [Required]
+        [ForeignKey("User")]
+        [Required]
         public long? UserId { get; set; }
-        //[Required]
+        [Required]
         public virtual User User { get; set; }
         public DateTime Published { get; set; }
         public DateTime DateCreated { get; set; }

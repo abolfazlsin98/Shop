@@ -1,4 +1,5 @@
-﻿using Bugeto_Store.Application.Services.Blog.Commands.AddBlog;
+﻿using Bugeto_Store.Application.Services.Blog;
+using Bugeto_Store.Application.Services.Blog.Commands.AddBlog;
 using Bugeto_Store.Application.Services.Blog.Commands.AddBlogCategory;
 using Bugeto_Store.Application.Services.Blog.Queries.GetAllCategorieBlogs;
 using Microsoft.AspNetCore.Authorization;
@@ -17,11 +18,16 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         public IAddBlogService _addBlog { get; set; }
         public IAddBlogCategoryService _addBlogCategory { get; set; }
         public IGetAllCategorieBlogs _getAllCategorieBlogs { get; set; }
-        public BlogController(IAddBlogService addBlog, IAddBlogCategoryService addBlogCategory, IGetAllCategorieBlogs getAllCategorieBlogs)
+
+        public IBlogService _blogService { get; set; }
+
+        public BlogController(IAddBlogService addBlog, IAddBlogCategoryService addBlogCategory, IGetAllCategorieBlogs getAllCategorieBlogs, IBlogService blogService)
         {
             _addBlog = addBlog;
             _addBlogCategory = addBlogCategory;
             _getAllCategorieBlogs = getAllCategorieBlogs;
+
+            _blogService = blogService;
         }
 
         [HttpGet]
@@ -40,16 +46,27 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddNewBlog(RequestAddBlogDto requestAddBlogDto)
         {
+            if (ModelState.IsValid)
+            {
 
-            //List<IFormFile> images = new List<IFormFile>();
-            //for (int i = 0; i < Request.Form.Files.Count; i++)
-            //{
-            //    var file = Request.Form.Files[i];
-            //    images.Add(file);
-            //}
-            //requestAddBlogDto.Images = images;
-            return Json(_addBlog.Execute(requestAddBlogDto));
+                List<IFormFile> images = new List<IFormFile>();
+                for (int i = 0; i < Request.Form.Files.Count; i++)
+                {
+                    var file = Request.Form.Files[i];
+                    images.Add(file);
+                }
+                requestAddBlogDto.Images = images;
+                var result = _blogService.AddBlog(requestAddBlogDto);
 
+                //if (result.IsSuccess)
+                //{
+                //    return RedirectToAction("Index");
+                //}
+
+                return View(requestAddBlogDto);
+
+            }
+            return View(requestAddBlogDto);
         }
 
 

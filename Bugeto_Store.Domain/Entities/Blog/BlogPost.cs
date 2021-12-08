@@ -14,8 +14,7 @@ namespace Bugeto_Store.Domain.Entities.Blog
     {
         [Required]
         public string Title { get; set; }
-        [Required]
-        public string Src { get; set; }
+     
         [Required]
         public string Content { get; set; }
 
@@ -31,6 +30,12 @@ namespace Bugeto_Store.Domain.Entities.Blog
         public long BlogCategoryId { get; set; }
         [Required]
         public BlogCategory BlogCategory { get; set; }
+
+        public ICollection<BlogInTags> BlogInTags { get; set; }
+
+        [Required]
+
+        public ICollection<BlogImage> BlogImages { get; set; }
 
 
         public ICollection<Comment> Comments { get; set; }

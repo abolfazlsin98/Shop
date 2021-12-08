@@ -17,18 +17,20 @@ namespace Bugeto_Store.Application.Interfaces.Contexts
 {
     public interface IDataBaseContext
     {
-     
-          DbSet<Category> Categories { get; set; }
-          DbSet<Product> Products { get; set; }
-          DbSet<ProductImages> ProductImages { get; set; }
-          DbSet<ProductFeatures> ProductFeatures { get; set; }
-          DbSet<Slider>  Sliders { get; set; }
-          DbSet<HomePageImages>   HomePageImages { get; set; }
-          DbSet<Cart>    Carts { get; set; }
-          DbSet<CartItem>     CartItems { get; set; }
-          DbSet<RequestPay>      RequestPays { get; set; }
-          DbSet<Order> Orders { get; set; }
-          DbSet<OrderDetail>  OrderDetails { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<Role> Roles { get; set; }
+        DbSet<UserInRole> UserInRoles { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImages> ProductImages { get; set; }
+        public DbSet<ProductFeatures> ProductFeatures { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
+        public DbSet<HomePageImages> HomePageImages { get; set; }
+        public DbSet<Cart>  Carts { get; set; }
+        public DbSet<CartItem>  CartItems { get; set; }
+        public DbSet<RequestPay>      RequestPays { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail>  OrderDetails { get; set; }
 
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Author> Authors { get; set; }
@@ -36,6 +38,7 @@ namespace Bugeto_Store.Application.Interfaces.Contexts
         public DbSet<BlogInTags> BlogInTags { get; set; }
         public DbSet<Tags> Tags { get; set; }
 
+        public DbSet<BlogImage> BlogImages { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
         int SaveChanges(bool acceptAllChangesOnSuccess);

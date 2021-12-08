@@ -13,6 +13,8 @@ namespace Bugeto_Store.Domain.Entities.Blog
     {
         [Required]
         public string Name { get; set; }
+
+        [Required]
         public ICollection<BlogInTags> BlogInTags { get; set; }
 
         public DateTime Published { get; set; }
